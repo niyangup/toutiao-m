@@ -6,3 +6,8 @@ export function login (mobile, code) {
     code
   })
 }
+
+/// 获取验证码
+export function sendSms (mobile) {
+  return request.get(`/app/v1_0/sms/codes/${mobile}`)
+}
