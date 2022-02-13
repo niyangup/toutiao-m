@@ -1,6 +1,10 @@
 <template>
   <div class="login-container">
-    <van-nav-bar title="登录" class="page-nav-bar"/>
+    <van-nav-bar title="登录" class="page-nav-bar">
+      <template #left>
+        <van-icon name="cross" @click="$router.back()"></van-icon>
+      </template>
+    </van-nav-bar>
 
     <van-form ref="loginForm" @submit="onSubmit(user)">
       <van-field
@@ -86,6 +90,7 @@ export default {
           message: 'success'
         })
         this.$store.commit('setUser', result.data.data)
+        this.$router.back()
       } catch (e) {
         this.$toast.success({
           message: 'fail'

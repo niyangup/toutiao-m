@@ -11,3 +11,7 @@ export function login (mobile, code) {
 export function sendSms (mobile) {
   return request.get(`/app/v1_0/sms/codes/${mobile}`)
 }
+
+export function getUserinfo () {
+  return request.get('/app/v1_0/user')
+}
