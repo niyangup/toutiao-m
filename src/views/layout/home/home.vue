@@ -16,6 +16,12 @@
       <van-tab title="标签 4">内容 4</van-tab>
       <van-tab title="标签 4">内容 4</van-tab>
       <van-tab title="标签 4">内容 4</van-tab>
+
+      <template #nav-right>
+        <div class="more-container">
+          <i class="iconfont icon-gengduo more-icon"></i>
+        </div>
+      </template>
     </van-tabs>
   </div>
 </template>
@@ -74,6 +80,32 @@ export default {
     height: 6px;
     background-color: #3296fa;
     margin-bottom: 8px;
+  }
+
+  .more-container {
+    position: fixed;
+    width: 66px;
+    height: 82px;
+    right: 0;
+    background-color: #fff;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i.more-icon {
+      font-size: 33px;
+    }
+
+    &:before {
+      left: 0;
+      position: absolute;
+      content: "";
+      width: 2px;
+      height: 100%;
+      background-image: url("~@/assets/gradient-gray-line.png");
+      background-size: contain;
+    }
   }
 }
 
