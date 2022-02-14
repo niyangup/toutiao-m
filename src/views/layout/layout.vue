@@ -4,7 +4,7 @@
 
     <div class="nav-bar">
       <van-tabbar class="layout-nav-bar" route>
-        <van-tabbar-item replace to="/layout/home">
+        <van-tabbar-item replace to="/layout/">
           <span class="text">首页</span>
           <template #icon>
             <i class="iconfont icon-shouye"></i>
