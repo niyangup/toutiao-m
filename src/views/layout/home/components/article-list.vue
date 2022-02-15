@@ -1,7 +1,7 @@
 <template>
   <div class="article-list-container">
 
-    <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh"  success-text="刷新成功">
+    <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh" success-text="刷新成功">
       <van-list
         v-model="loading"
         :finished="finished"
@@ -87,4 +87,8 @@ export default {
 
 <style scoped>
 
+.article-list-container {
+  height: 79vh;
+  overflow-y: auto;
+}
 </style>
