@@ -15,3 +15,6 @@ export function sendSms (mobile) {
 export function getUserinfo () {
   return request.get('/app/v1_0/user')
 }
+export function getUserChannel () {
+  return request.get('/app/v1_0/user/channels')
+}

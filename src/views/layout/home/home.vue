@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <van-nav-bar class="page-nav-bar">
+    <van-nav-bar class="page-nav-bar" fixed>
       <template #title>
         <van-button class="search-btn" type="info" round size="mini" icon="search">
           搜索
@@ -9,13 +9,9 @@
     </van-nav-bar>
 
     <van-tabs class="channel-tabs" v-model="active" animated swipeable>
-      <van-tab title="标签 1">内容 1</van-tab>
-      <van-tab title="标签 2">内容 2</van-tab>
-      <van-tab title="标签 3">内容 3</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
+      <van-tab :title="item.name " v-for="item in channels" :key="item.id">
+        <article-list :id="item.id"></article-list>
+      </van-tab>
 
       <template #nav-right>
         <div class="more-container">
@@ -27,12 +23,24 @@
 </template>
 
 <script>
+import { getUserChannel } from '@/api/user'
+import ArticleList from '@/views/layout/home/components/article-list'
+
 export default {
   name: 'home',
+  components: { ArticleList },
   data () {
     return {
-      active: 2
+      active: 0,
+      channels: []
     }
+  },
+  created () {
+    getUserChannel().then(({ data: { data: channelList } }) => {
+      this.channels = channelList.channels
+    }).catch(reason => {
+      console.log(reason)
+    })
   }
 }
 </script>
@@ -40,6 +48,9 @@ export default {
 <style scoped lang="less">
 
 .home-container {
+  margin-bottom: 100px;
+  margin-top: 174px;
+
   .page-nav-bar {
     .search-btn {
       width: 555px;
@@ -68,6 +79,11 @@ export default {
   }
 
   .van-tabs__wrap {
+    position: fixed;
+    z-index: 1;
+    top: 92px;
+    left: 0;
+    right: 0;
     height: 82px;
   }
 
