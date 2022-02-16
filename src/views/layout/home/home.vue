@@ -14,25 +14,40 @@
       </van-tab>
 
       <template #nav-right>
-        <div class="more-container">
+        <div class="more-container" @click="isChannelsEdit=true">
           <i class="iconfont icon-gengduo more-icon"></i>
         </div>
       </template>
     </van-tabs>
+
+    <van-popup
+      v-model="isChannelsEdit"
+      closeable
+      position="bottom"
+      close-icon-position="top-left"
+      :style="{ height: '100%' }"
+    >
+      <ChannelEdit></ChannelEdit>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getUserChannel } from '@/api/user'
 import ArticleList from '@/views/layout/home/components/article-list'
+import ChannelEdit from '@/views/layout/home/components/channel-edit'
 
 export default {
   name: 'home',
-  components: { ArticleList },
+  components: {
+    ChannelEdit,
+    ArticleList
+  },
   data () {
     return {
       active: 0,
-      channels: []
+      channels: [],
+      isChannelsEdit: false
     }
   },
   created () {
