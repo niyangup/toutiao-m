@@ -1,6 +1,8 @@
 <template>
   <div class="layout-container">
-    <router-view></router-view>
+   <keep-alive>
+     <router-view></router-view>
+   </keep-alive>
 
     <div class="nav-bar">
       <van-tabbar class="layout-nav-bar" route>

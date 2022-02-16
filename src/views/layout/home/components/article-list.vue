@@ -10,7 +10,7 @@
         error-text="请求失败，点击重新加载"
         @load="onLoad"
       >
-        <van-cell v-for="item in list" :key="item.art_id" :title="item.title"/>
+        <article-item :article="item" v-for="item in list" :key="item.art_id"></article-item>
       </van-list>
     </van-pull-refresh>
   </div>
@@ -19,9 +19,11 @@
 <script>
 // eslint-disable-next-line camelcase
 import { getArticle } from '@/api/article'
+import ArticleItem from '@/components/article-item/article-item'
 
 export default {
   name: 'article-list',
+  components: { ArticleItem },
   props: {
     id: {
       type: Number,
