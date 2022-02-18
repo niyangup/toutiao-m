@@ -27,7 +27,7 @@
       close-icon-position="top-left"
       :style="{ height: '100%' }"
     >
-      <ChannelEdit></ChannelEdit>
+      <ChannelEdit :mine-channels="channels" :index="active" @updateActiveIndex="updateActiveIndex"/>
     </van-popup>
   </div>
 </template>
@@ -48,6 +48,15 @@ export default {
       active: 0,
       channels: [],
       isChannelsEdit: false
+    }
+  },
+  methods: {
+    updateActiveIndex (index, isClose = true) {
+      console.log('updateActiveIndex', index)
+      this.active = index
+      if (isClose) {
+        this.isChannelsEdit = false
+      }
     }
   },
   created () {

@@ -11,7 +11,7 @@
             height="100"
             :src="item"
             fit="cover"
-            v-for="item in article.cover.images" :key="item"
+            v-for="item in article.cover.images" :key="item+Date.now()"
             class="right-cover"
           />
         </div>
