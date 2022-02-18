@@ -6,6 +6,7 @@ import home from '@/views/layout/home/home'
 import qa from '@/views/layout/qa/qa'
 import video from '@/views/layout/video/video'
 import mine from '@/views/layout/mine/mine'
+import Search from '@/views/search/search'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,11 @@ const routes = [
         component: mine
       }
     ]
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: Search
   }
 ]
 
