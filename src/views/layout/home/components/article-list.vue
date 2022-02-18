@@ -55,7 +55,7 @@ export default {
     async onLoad (append = true) {
       try {
         const { data } = await getArticle({
-          channel_id: this.id,
+          channel_id: this.id ?? 0,
           timestamp: this.pre_timestamp,
           with_top: 0
         })

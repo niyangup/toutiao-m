@@ -36,6 +36,8 @@
 import { getUserChannel } from '@/api/user'
 import ArticleList from '@/views/layout/home/components/article-list'
 import ChannelEdit from '@/views/layout/home/components/channel-edit'
+import { mapState } from 'vuex'
+import { getItem } from '@/utils/storage'
 
 export default {
   name: 'home',
@@ -59,12 +61,25 @@ export default {
       }
     }
   },
-  created () {
-    getUserChannel().then(({ data: { data: channelList } }) => {
-      this.channels = channelList.channels
-    }).catch(reason => {
-      console.log(reason)
-    })
+  computed: {
+    ...mapState(['user'])
+  },
+  async created () {
+    let myChannels = []
+    if (this.user) {
+      const { data: { data: channels } } = await getUserChannel()
+      myChannels = channels.channels
+    } else {
+      const localChannels = getItem('TOUTIAO_MINE_CHANNEL')
+      if (localChannels) {
+        myChannels = localChannels
+      } else {
+        const { data: { data: channelList } } = await getUserChannel()
+        myChannels = channelList.channels
+      }
+    }
+
+    this.channels = myChannels
   }
 }
 </script>

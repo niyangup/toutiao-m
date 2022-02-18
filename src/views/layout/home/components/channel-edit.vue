@@ -45,7 +45,9 @@
 </template>
 
 <script>
-import { getAllChannel } from '@/api/channel'
+import { addUserChannel, deleteUserChannel, getAllChannel } from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/storage'
 
 export default {
   name: 'channel-edit',
@@ -69,17 +71,42 @@ export default {
   methods: {
     adjustChannel (item) {
       this.mineChannels.push(item)
+      if (this.user) {
+        addUserChannel({
+          id: item.id,
+          seq: this.mineChannels.length
+        }).then(value => {
+          console.log(value)
+        }, reason => {
+          console.log(reason)
+        })
+      } else {
+        setItem('TOUTIAO_MINE_CHANNEL', this.mineChannels)
+      }
     },
     adjustMineChannel (item, index) {
       if (this.isEditing && !this.fixChannelIds.includes(item.id)) {
         this.$emit('updateActiveIndex', index, false)
         this.mineChannels.splice(index, 1)
+        this.deleteChannel(item.id)
       } else {
         this.$emit('updateActiveIndex', index)
+      }
+    },
+    async deleteChannel (id) {
+      if (this.user) {
+        try {
+          await deleteUserChannel(id)
+        } catch (e) {
+          console.log('操作失败 ', e)
+        }
+      } else {
+        setItem('TOUTIAO_MINE_CHANNEL', this.mineChannels)
       }
     }
   },
   computed: {
+    ...mapState(['user']),
     recommendChannels () {
       const mineChannelIds = this.mineChannels.map(value => value.id)
       return this.allChannels.filter(value => !mineChannelIds.includes(value.id))
