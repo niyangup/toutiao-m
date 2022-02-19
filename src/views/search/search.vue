@@ -13,7 +13,7 @@
     </form>
 
     <search-result v-if="isShowResult" :searchText="searchText"/>
-    <search-history v-else-if="!searchText"/>
+    <search-history v-else-if="!searchText" :searchHistory="searchHistory" @clear="clearHistory" @search="onSearch"/>
     <search-suggestion v-else :searchText="searchText" @search="onSearch"/>
 
   </div>
@@ -24,6 +24,7 @@ import { Toast } from 'vant'
 import SearchHistory from '@/views/search/components/search-history'
 import SearchSuggestion from '@/views/search/components/search-suggestion'
 import SearchResult from '@/views/search/components/search-result'
+import { getItem, setItem } from '@/utils/storage'
 
 export default {
   name: 'search',
@@ -35,16 +36,32 @@ export default {
   data () {
     return {
       searchText: '',
-      isShowResult: false
+      isShowResult: false,
+      searchHistory: getItem('TOUTIAO_SEARCH_HISTORY') ?? []
     }
   },
   methods: {
     onSearch (val) {
+      const index = this.searchHistory.indexOf(val)
+      if (index !== -1) {
+        this.searchHistory.splice(index, 1)
+      }
+
+      this.searchHistory.unshift(val)
+
       this.searchText = val
       this.isShowResult = true
     },
     onCancel () {
       Toast('取消')
+    },
+    clearHistory () {
+      this.searchHistory = []
+    }
+  },
+  watch: {
+    searchHistory (newValue, oldValue) {
+      setItem('TOUTIAO_SEARCH_HISTORY', newValue)
     }
   }
 }
