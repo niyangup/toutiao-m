@@ -7,6 +7,7 @@ import qa from '@/views/layout/qa/qa'
 import video from '@/views/layout/video/video'
 import mine from '@/views/layout/mine/mine'
 import Search from '@/views/search/search'
+import Article from '@/views/article/article'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,12 @@ const routes = [
     path: '/search',
     name: 'search',
     component: Search
+  },
+  {
+    path: '/article/:articleId',
+    name: 'article',
+    component: Article,
+    props: true
   }
 ]
 

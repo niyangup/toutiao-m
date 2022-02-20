@@ -1,5 +1,5 @@
 export function setItem (key, value) {
-  if (value instanceof Object) {
+  if (typeof value === 'object') {
     value = JSON.stringify(value)
   }
   window.localStorage.setItem(key, value)
