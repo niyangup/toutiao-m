@@ -5,7 +5,6 @@ import JSONbig from 'json-bigint'
 const request = axios.create({
   baseURL: 'http://api-toutiao-web.itheima.net/',
   transformResponse: [function (data) {
-    console.log(data)
     try {
       return JSONbig.parse(data)
     } catch (e) {
