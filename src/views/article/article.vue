@@ -55,7 +55,7 @@
         <!-- /用户信息 -->
 
         <!-- 文章内容 -->
-        <div class="article-content markdown-body" v-html="article.content"></div>
+        <div class="article-content markdown-body" ref="article-content" v-html="article.content"></div>
         <van-divider>正文结束</van-divider>
       </div>
       <!-- /加载完成-文章详情 -->
@@ -106,6 +106,7 @@
 
 <script>
 import { getArticleById } from '@/api/article'
+import { ImagePreview } from 'vant'
 
 export default {
   name: 'Article',
@@ -134,6 +135,9 @@ export default {
       try {
         const { data } = await getArticleById(this.articleId)
         this.article = data.data
+        setTimeout(() => {
+          this.handleImages()
+        }, 0)
       } catch (err) {
         if (err?.response?.status === 404) {
           this.errorStatus = 404
@@ -145,6 +149,28 @@ export default {
     },
     retry () {
       this.loadArticle()
+    },
+    handleImages () {
+      const content = this.$refs['article-content']
+
+      const imgs = content.querySelectorAll('.article-content img')
+      const imgList = []
+      imgs.forEach((img, index) => {
+        imgList.push(img.src)
+        img.addEventListener('click', () => {
+          ImagePreview({
+            images: [
+              'https://img01.yzcdn.cn/vant/apple-1.jpg',
+              'https://img01.yzcdn.cn/vant/apple-2.jpg'
+            ],
+            onClose () {
+            },
+            startPosition: index
+          })
+        })
+      })
+
+      console.log(imgList)
     }
   }
 }
