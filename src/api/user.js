@@ -15,6 +15,26 @@ export function sendSms (mobile) {
 export function getUserinfo () {
   return request.get('/app/v1_0/user')
 }
+
 export function getUserChannel () {
   return request.get('/app/v1_0/user/channels')
+}
+
+// 关注用户
+export const following = (target) => {
+  return request({
+    url: '/app/v1_0/user/followings',
+    method: 'POST',
+    data: {
+      target
+    }
+  })
+}
+
+// 取消关注用户
+export const unfollowing = (target) => {
+  return request({
+    url: '/app/v1_0/user/followings/' + target,
+    method: 'DELETE'
+  })
 }

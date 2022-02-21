@@ -37,20 +37,7 @@
           />
           <div slot="title" class="user-name">{{ article.aut_name }}</div>
           <div slot="label" class="publish-date">{{ article.pubdate|relativeTime }}</div>
-          <van-button
-            class="follow-btn"
-            type="info"
-            color="#3296fa"
-            round
-            size="small"
-            icon="plus"
-          >关注
-          </van-button>
-          <!-- <van-button
-            class="follow-btn"
-            round
-            size="small"
-          >已关注</van-button> -->
+          <follow-user></follow-user>
         </van-cell>
         <!-- /用户信息 -->
 
@@ -107,10 +94,12 @@
 <script>
 import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
+import { following, unfollowing } from '@/api/user'
+import FollowUser from '@/components/follow-user/follow-user'
 
 export default {
   name: 'Article',
-  components: {},
+  components: { FollowUser },
   props: {
     articleId: {
       type: String,
@@ -121,7 +110,8 @@ export default {
     return {
       article: {}, // 文章详情
       loading: true,
-      errorStatus: 0
+      errorStatus: 0,
+      isFollowLoading: false
     }
   },
   computed: {},
@@ -171,6 +161,24 @@ export default {
       })
 
       console.log(imgList)
+    },
+
+    async onFollow () {
+      this.isFollowLoading = true
+      console.log(this.article)
+      try {
+        if (this.article.is_followed) {
+          const { data } = await unfollowing()
+          console.log(data)
+        } else {
+          const { data } = await following()
+          console.log(data)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+      this.isFollowLoading = false
+      this.article.is_followed = !this.article.is_followed
     }
   }
 }
