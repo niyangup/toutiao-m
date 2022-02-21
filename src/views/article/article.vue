@@ -48,6 +48,30 @@
         <!-- 文章内容 -->
         <div class="article-content markdown-body" ref="article-content" v-html="article.content"></div>
         <van-divider>正文结束</van-divider>
+
+        <!-- 底部区域 -->
+        <div class="article-bottom">
+          <van-button
+            class="comment-btn"
+            type="default"
+            round
+            size="small"
+          >写评论
+          </van-button>
+          <van-icon
+            name="comment-o"
+            info="123"
+            color="#777"
+          />
+          <collect-article class="btn-item" :article-id="article.art_id"
+                           v-model="article.is_collected"></collect-article>
+          <van-icon
+            color="#777"
+            name="good-job-o"
+          />
+          <van-icon name="share" color="#777777"></van-icon>
+        </div>
+        <!-- /底部区域 -->
       </div>
       <!-- /加载完成-文章详情 -->
 
@@ -67,31 +91,6 @@
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
     </div>
 
-    <!-- 底部区域 -->
-    <div class="article-bottom">
-      <van-button
-        class="comment-btn"
-        type="default"
-        round
-        size="small"
-      >写评论
-      </van-button>
-      <van-icon
-        name="comment-o"
-        info="123"
-        color="#777"
-      />
-      <van-icon
-        color="#777"
-        name="star-o"
-      />
-      <van-icon
-        color="#777"
-        name="good-job-o"
-      />
-      <van-icon name="share" color="#777777"></van-icon>
-    </div>
-    <!-- /底部区域 -->
   </div>
 </template>
 
@@ -99,10 +98,14 @@
 import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
 import FollowUser from '@/components/follow-user/follow-user'
+import CollectArticle from '@/components/collect-article/collect-article'
 
 export default {
   name: 'Article',
-  components: { FollowUser },
+  components: {
+    CollectArticle,
+    FollowUser
+  },
   props: {
     articleId: {
       type: String,
@@ -285,6 +288,14 @@ export default {
       font-size: 30px;
       line-height: 46px;
       color: #a7a7a7;
+    }
+
+    .btn-item {
+      border: none;
+      padding: 0;
+      height: 40px;
+      line-height: 40px;
+      color: #777777
     }
 
     .van-icon {
