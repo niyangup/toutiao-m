@@ -37,7 +37,11 @@
           />
           <div slot="title" class="user-name">{{ article.aut_name }}</div>
           <div slot="label" class="publish-date">{{ article.pubdate|relativeTime }}</div>
-          <follow-user></follow-user>
+          <follow-user
+            :user-id="article.aut_id"
+            v-model="article.is_followed"
+          >
+          </follow-user>
         </van-cell>
         <!-- /用户信息 -->
 
@@ -94,7 +98,6 @@
 <script>
 import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
-import { following, unfollowing } from '@/api/user'
 import FollowUser from '@/components/follow-user/follow-user'
 
 export default {
@@ -110,8 +113,7 @@ export default {
     return {
       article: {}, // 文章详情
       loading: true,
-      errorStatus: 0,
-      isFollowLoading: false
+      errorStatus: 0
     }
   },
   computed: {},
@@ -161,24 +163,6 @@ export default {
       })
 
       console.log(imgList)
-    },
-
-    async onFollow () {
-      this.isFollowLoading = true
-      console.log(this.article)
-      try {
-        if (this.article.is_followed) {
-          const { data } = await unfollowing()
-          console.log(data)
-        } else {
-          const { data } = await following()
-          console.log(data)
-        }
-      } catch (e) {
-        console.log(e)
-      }
-      this.isFollowLoading = false
-      this.article.is_followed = !this.article.is_followed
     }
   }
 }
