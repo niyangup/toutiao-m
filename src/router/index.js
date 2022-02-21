@@ -8,6 +8,7 @@ import video from '@/views/layout/video/video'
 import mine from '@/views/layout/mine/mine'
 import Search from '@/views/search/search'
 import Article from '@/views/article/article'
+import UserProfile from '@/views/user-profile'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,11 @@ const routes = [
     name: 'article',
     component: Article,
     props: true
+  },
+  {
+    path: '/user/profile',
+    name: 'user-profile',
+    component: UserProfile
   }
 ]
 
